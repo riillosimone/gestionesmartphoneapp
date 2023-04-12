@@ -175,4 +175,73 @@ public class SmartphoneServiceImpl implements SmartphoneService {
 		
 	}
 
+	@Override
+	public void rimuoviApp(Smartphone smartphoneInstance, App appInstance) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+
+			// injection
+			smartphoneDAO.setEntityManager(entityManager);
+
+			smartphoneInstance = entityManager.merge(smartphoneInstance);
+
+			appInstance = entityManager.merge(appInstance);
+
+			smartphoneInstance.getApps().remove(appInstance);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public void rimozioneSmartphoneCompleta(Long idSmartphone) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+
+			// injection
+			smartphoneDAO.setEntityManager(entityManager);
+
+			smartphoneDAO.deleteSmartphoneAfterDisinstalling2Apps(idSmartphone);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+		
+	}
+
+	@Override
+	public Smartphone caricaSingoloElementoEagerFetchingApps(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+
+			// injection
+			smartphoneDAO.setEntityManager(entityManager);
+
+			return smartphoneDAO.findByIdEagerApps(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+	
+	
+	
+
+	
 }

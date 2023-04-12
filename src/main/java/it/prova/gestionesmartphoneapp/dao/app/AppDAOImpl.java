@@ -59,8 +59,8 @@ public class AppDAOImpl implements AppDAO {
 	@Override
 	public void updateVersioneEDataAggiornamento(Long idApp) throws Exception {
 		entityManager.createNativeQuery(
-				"update app a set versione = versione + 1, dataaggiornamento = date_format(now(),'%Y-%m-%d') where id = :idApp ")
-				.setParameter("idApp", idApp);
+				"update app a set versione = versione + 1, dataultimoaggiornamento = date_format(now(),'%Y-%m-%d') where id = :idApp ")
+				.setParameter("idApp", idApp).executeUpdate();
 
 	}
 
