@@ -169,4 +169,30 @@ public class AppServiceImpl implements AppService {
 		}
 	}
 
+	@Override
+	public void aggiornaVersioneAppEDataDiAggiornamento(Long idApp) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+
+			// injection
+			appDao.setEntityManager(entityManager);
+
+			appDao.updateVersioneEDataAggiornamento(idApp);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+		
+	}
+
+
+	
+	
+
 }

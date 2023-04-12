@@ -15,6 +15,8 @@ public interface SmartphoneService {
 	
 	public void aggiorna(Smartphone smartphoneInstance) throws Exception;
 	
+	public void aggiornaVersioneOS(Long idSmartphone) throws Exception;
+	
 	public void inserisciNuovo (Smartphone smartphoneInstance) throws Exception;
 	
 	public void rimuovi (Long idSmartphone) throws Exception;

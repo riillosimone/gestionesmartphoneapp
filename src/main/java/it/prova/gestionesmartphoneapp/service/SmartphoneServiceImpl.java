@@ -152,4 +152,27 @@ public class SmartphoneServiceImpl implements SmartphoneService {
 
 	}
 
+	@Override
+	public void aggiornaVersioneOS(Long idSmartphone) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+
+			// injection
+			smartphoneDAO.setEntityManager(entityManager);
+
+			smartphoneDAO.updateVersioneOS(idSmartphone);
+
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+
+		
+	}
+
 }

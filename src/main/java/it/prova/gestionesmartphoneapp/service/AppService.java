@@ -15,6 +15,8 @@ public interface AppService {
 	
 	public void aggiorna (App appInstance) throws Exception;
 	
+	public void aggiornaVersioneAppEDataDiAggiornamento (Long idApp) throws Exception;
+	
 	public void inserisciNuovo (App appInstance) throws Exception;
 	
 	public void rimuovi (Long idApp) throws Exception;

@@ -7,4 +7,5 @@ public interface AppDAO extends IBaseDAO<App>{
 	
 	public App findByNome (String nome) throws Exception;
 
+	public void updateVersioneEDataAggiornamento (Long idApp) throws Exception;
 }

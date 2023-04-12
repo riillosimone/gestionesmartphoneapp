@@ -9,11 +9,11 @@ import it.prova.gestionesmartphoneapp.model.Smartphone;
 public class SmartphoneDAOImpl implements SmartphoneDAO {
 
 	private EntityManager entityManager;
-	
+
 	@Override
 	public List<Smartphone> list() throws Exception {
-		
-		return entityManager.createQuery("from Smartphone",	Smartphone.class).getResultList();
+
+		return entityManager.createQuery("from Smartphone", Smartphone.class).getResultList();
 	}
 
 	@Override
@@ -23,23 +23,23 @@ public class SmartphoneDAOImpl implements SmartphoneDAO {
 
 	@Override
 	public void update(Smartphone input) throws Exception {
-		if(input== null)
+		if (input == null)
 			throw new Exception("Problema valore in input.");
+
 		input = entityManager.merge(input);
 	}
-	
 
 	@Override
 	public void insert(Smartphone input) throws Exception {
-		if(input== null)
+		if (input == null)
 			throw new Exception("Problema valore in input.");
 		entityManager.persist(input);
-		
+
 	}
 
 	@Override
 	public void delete(Smartphone input) throws Exception {
-		if(input== null)
+		if (input == null)
 			throw new Exception("Problema valore in input.");
 		entityManager.remove(entityManager.merge(input));
 	}
@@ -47,7 +47,13 @@ public class SmartphoneDAOImpl implements SmartphoneDAO {
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
-		
+
+	}
+
+	@Override
+	public void updateVersioneOS(Long idSmartphone) throws Exception {
+		entityManager.createNativeQuery("update smartphone s set s.versioneOS = s.versioneOS +1 where id :idSmartphone")
+				.setParameter("idSmartphone", idSmartphone);
 	}
 
 }
